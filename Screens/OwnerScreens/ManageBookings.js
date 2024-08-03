@@ -4,7 +4,7 @@ import { useFocusEffect } from '@react-navigation/native'
 
 //import firebase
 import { auth, db } from "../../FirebaseConfig";
-import { getDocs, query, where, collection } from "firebase/firestore"
+import { query, where, collection, onSnapshot } from "firebase/firestore"
 
 const ManageBookings = ({ navigation }) => {
 
@@ -21,11 +21,12 @@ const ManageBookings = ({ navigation }) => {
             const collectionRef = collection(db, 'bookings');
             const queryRef = query(collectionRef, where('ownerId', '==', auth.currentUser.uid));
 
-            const querySnapshot = await getDocs(queryRef);
-            if (querySnapshot.docs.length > 0) {
-                const resultFromDB = querySnapshot.docs.map(doc => ({ id: doc.id, booking: doc.data() }));
-                setBookingsList(resultFromDB);
-            }
+            const data = onSnapshot(queryRef, (snapshot) => {
+                if (snapshot.docs.length > 0) {
+                    const resultFromDB = snapshot.docs.map(doc => ({ id: doc.id, booking: doc.data() }));
+                    setBookingsList(resultFromDB);
+                }
+            })
         } catch (err) {
             console.error("Error getting documents: ", err);
             alert('Failed to fetch bookings. Please try again later.');

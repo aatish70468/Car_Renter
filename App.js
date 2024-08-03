@@ -43,7 +43,7 @@ export default function App() {
 
   const btnDisplayLogout = ({ navigation }) => (
     <Pressable onPress={() => btnLogoutPressed({ navigation })} style={styles.logoutButton}>
-      <Icon name='exit' size={24} color={colors.lightText} />
+      <Icon name='exit' size={35} color={colors.lightText} />
     </Pressable>
   );
 
@@ -71,7 +71,16 @@ export default function App() {
         name="Manage Booking"
         component={ManageBookings}
         options={({ navigation }) => ({
-          headerRight: () => btnDisplayLogout({ navigation }),
+          headerRight: () => (
+            <View style={{ flexDirection: 'row', marginRight: 10 }}>
+
+              <Pressable onPress={() => { navigation.navigate('Create Listing') }} style={{ marginRight: 20 }}>
+                <Icon name='add' size={35} color='white' />
+              </Pressable>
+
+              {btnDisplayLogout({ navigation })}
+            </View>
+          )
         })} />
 
       <Stack.Screen

@@ -85,7 +85,7 @@ const BookVehicle = ({ navigation, route }) => {
             <ScrollView>
                 <Text style={styles.title}>{listing.vehicleName}</Text>
                 <Text style={styles.ownerName}>Owned by {ownerName}</Text>
-                
+
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.imageContainer}>
                     {listing.image.map((image, index) => (
                         <Image
@@ -95,7 +95,7 @@ const BookVehicle = ({ navigation, route }) => {
                         />
                     ))}
                 </ScrollView>
-                
+
                 <View style={styles.detailsContainer}>
                     <DetailItem icon="pricetag" label="Rental Price" value={`$${listing.rentalPrice}/week`} />
                     <DetailItem icon="people" label="Capacity" value={`${listing.minSeat} - ${listing.maxSeat} seats`} />

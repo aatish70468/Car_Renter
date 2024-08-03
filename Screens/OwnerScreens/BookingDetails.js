@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image, ScrollView, SafeAreaView, ActivityIndicator, TouchableOpacity } from "react-native";
-import { auth, db } from '../../FirebaseConfig'
+import { db } from '../../FirebaseConfig'
 import { getDocs, collection, doc, updateDoc, query, where } from "firebase/firestore";
 
 const BookingDetails = ({ navigation, route }) => {
@@ -8,13 +8,10 @@ const BookingDetails = ({ navigation, route }) => {
     const { bookingDetailList } = route.params;
     const [renterData, setRenterData] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [confirmationCode, setConfirmationCode] = useState('');
 
     useEffect(() => {
         getOwnerList();
     }, [bookingDetailList]);
-
-    //console.log(`Booking: ${JSON.stringify(bookingDetailList)}`)
 
     const getOwnerList = async () => {
         try {
@@ -26,6 +23,7 @@ const BookingDetails = ({ navigation, route }) => {
                 const resultFromDB = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 setRenterData(resultFromDB[0]);
             }
+
         } catch (err) {
             console.error("Error getting documents: ", err);
             alert('Failed to fetch bookings. Please try again later.');

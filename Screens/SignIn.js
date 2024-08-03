@@ -84,7 +84,7 @@ const SignIn = ({ navigation }) => {
                     </View>
 
                     <View style={styles.inputContainer}>
-                    <Ionicons name="person-outline" size={24} color="#007bff" style={styles.pickerIcon} />
+                        <Ionicons name="person-outline" size={24} color="#007bff" style={styles.pickerIcon} />
                         <Picker
                             selectedValue={userType}
                             style={styles.textInput}

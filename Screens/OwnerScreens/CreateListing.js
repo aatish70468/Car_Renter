@@ -7,7 +7,6 @@ import { getDocs, collection, addDoc, query, where } from "firebase/firestore";
 
 const CreateListing = ({ navigation }) => {
     const [vechilesList, setVechilesList] = useState([]);
-    const [isLoading, setLoading] = useState(true);
     const [vehicleId, setVehicleId] = useState('');
     const [vehicleName, setVehicleName] = useState('');
     const [minSeat, setMinSeat] = useState('');

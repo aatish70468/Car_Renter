@@ -2,7 +2,7 @@ import { Picker } from "@react-native-picker/picker";
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, ActivityIndicator } from "react-native";
 import { auth, db } from '../../FirebaseConfig';
-import { getDocs, collection, query, where } from "firebase/firestore";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
 
 const ReservationScreen = ({ navigation }) => {
     const [reservationList, setReservationList] = useState([]);
@@ -17,11 +17,12 @@ const ReservationScreen = ({ navigation }) => {
             const collectionRef = collection(db, 'bookings');
             const queryRef = query(collectionRef, where('renterId', '==', auth.currentUser.uid));
 
-            const querySnapshot = await getDocs(queryRef);
-            if (querySnapshot.docs.length > 0) {
-                const resultFromDB = querySnapshot.docs.map(doc => ({ id: doc.id, booking: doc.data() }));
-                setReservationList(resultFromDB);
-            }
+            const data = onSnapshot(queryRef, (snapshot) => {
+                if (snapshot.docs.length > 0) {
+                    const resultFromDB = snapshot.docs.map(doc => ({ id: doc.id, booking: doc.data() }));
+                    setReservationList(resultFromDB);
+                }
+            })
         } catch (err) {
             console.error("Error getting documents: ", err);
             alert('Failed to fetch bookings. Please try again later.');
